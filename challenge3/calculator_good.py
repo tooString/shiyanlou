@@ -108,10 +108,10 @@ class UserData(object):
         userdata_path = args.userdata_path
         userdata = []
         with open(userdata_path) as f:
-            for line in f.readlines():
-                employee_id, income_string = line.strip().split(',')
+            for row in csv.reader(f):
+                employee_id, salary = row
                 try:
-                    income = int(income_string)
+                    income = int(salary)
                 except ValueError:
                     print('Parameter Error')
                     exit()
