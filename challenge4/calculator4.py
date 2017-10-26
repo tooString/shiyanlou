@@ -113,8 +113,8 @@ class UserData(Process):
 
     def _read_users_data(self):
         with open(args.userdata_path) as f:
-            for line in f.readlines():
-                employee_id, income_string = line.strip().split(',')
+            for line in csv.reader(f):
+                employee_id, income_string = line
                 try:
                     income = int(income_string)
                 except ValueError:
