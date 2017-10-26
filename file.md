@@ -6,21 +6,21 @@
     * "b"，以二进制的方式代开
 
 2. pickle:
-pickle 将字典序列化成字节（以二进制读取写入）
-dump 和 load 将字典存入到文件并读取出来恢复成字典 
+    * pickle 将字典序列化成字节（以二进制读取写入）
+    * dump 和 load 将字典存入到文件并读取出来恢复成字典 
 
 3. json：
-json 将字典序列化为字符串
-dumps 和 loads 执行序列化和反序列化操作
+    * json 将字典序列化为字符串
+    * dumps 和 loads 执行序列化和反序列化操作
 
 4. os.path:
-    os.path.abspath(path) 返回文件的绝对路径
-    os.path.basename(path) 返回文件名
-    os.path.dirname(path) 返回文件路径
-    os.path.isfile(path) 判断路径是否为文件
-    os.path.isdir(path) 判断路径是否为目录
-    os.path.exists(path) 判断路径是否存在
-    os.path.join(path1[, path2[, ...]]) 把目录和文件名合成一个路径
+    * os.path.abspath(path) 返回文件的绝对路径
+    * os.path.basename(path) 返回文件名
+    * os.path.dirname(path) 返回文件路径
+    * os.path.isfile(path) 判断路径是否为文件
+    * os.path.isdir(path) 判断路径是否为目录
+    * os.path.exists(path) 判断路径是否存在
+    * os.path.join(path1[, path2[, ...]]) 把目录和文件名合成一个路径
 5. csv
 用csv读取一个csv文件
 
