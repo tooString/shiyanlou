@@ -4,7 +4,7 @@
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-# from datetime import datetime
+from datetime import datetime
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -80,26 +80,30 @@ class Category(db.Model):
         self.name = name
 
 
-# # 增加到MySQL中的数据
-# db.create_all()
-# java = Category('Java')
-# python = Category('Python')
-# file1 = File('Hello Java',
-#              datetime.utcnow(), java, 'File Content - Java is cool!')
-# file2 = File('Hello Python',
-#              datetime.utcnow(), python, 'File Content - Python is cool!')
-# db.session.add(java)
-# db.session.add(python)
-# db.session.add(file1)
-# db.session.add(file2)
-# db.session.commit()
+def insert_data():
+    # 增加到MySQL中的数据
+    java = Category('Java')
+    python = Category('Python')
+    file1 = File('Hello Java',
+                 datetime.utcnow(), java, 'File Content - Java is cool!')
+    file2 = File('Hello Python',
+                 datetime.utcnow(), python, 'File Content - Python is cool!')
+    db.session.add(java)
+    db.session.add(python)
+    db.session.add(file1)
+    db.session.add(file2)
+    db.session.commit()
 
-# # 增加到MongoDB中的数据
-# file1.add_tag('tech')
-# file1.add_tag('java')
-# file1.add_tag('linux')
-# file2.add_tag('tech')
-# file2.add_tag('python')
+    # 增加到MongoDB中的数据
+    file1.add_tag('tech')
+    file1.add_tag('java')
+    file1.add_tag('linux')
+    file2.add_tag('tech')
+    file2.add_tag('python')
+
+
+db.create_all()
+insert_data()
 
 
 @app.route('/')

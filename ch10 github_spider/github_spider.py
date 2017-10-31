@@ -13,5 +13,5 @@ class Git_Spider(scrapy.Spider):
         for repo in response.css('li.source'):
             yield {
                 'name': repo.xpath('.//a[@itemprop="name codeRepository"]/text()').re_first("\n\s*(.+)"),
-                'update_time': repo.xpath('.//div[contains(@class, "f6")]/relative-time/@datetime').extract_first()
+                'update_time': repo.xpath('.//relative-time/@datetime').extract_first()
                 }
