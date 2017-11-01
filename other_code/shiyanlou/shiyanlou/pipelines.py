@@ -2,6 +2,7 @@
 
 from sqlalchemy.orm import sessionmaker
 from shiyanlou.models import Course, engine
+from scrapy.exceptions import DropItem
 
 
 class ShiyanlouPipeline(object):
@@ -12,7 +13,11 @@ class ShiyanlouPipeline(object):
         这个方法必须要返回一个item对象。
         '''
         item['students'] = int(item['students'])
-        self.session.add(Course(**item))
+        if item['students'] < 1000:
+            '''对于不需要的item raise DropItem 异常'''
+            raise DropItem('Course student less than 1000.')
+        else:
+            self.session.add(Course(**item))
         return item
 
     def open_spider(self, spider):
