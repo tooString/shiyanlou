@@ -4,6 +4,7 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from flask import url_for
 
 db = SQLAlchemy()
 
@@ -72,3 +73,33 @@ class Course(Base):
     name = db.Column(db.String(128), unique=True, index=True, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     author = db.relationship('User', uselist=False)
+    # 课程描述
+    description = db.Column(db.String(256))
+    # 图片地址
+    image_url = db.Column(db.String(256))
+    chapters = db.relationship('Chapter')
+
+    def __repr__(self):
+        return '<Course:{}>'.format(self.name)
+
+    @property
+    def url(self):
+        return url_for('course.detail', course_id=self.id)
+
+
+class Chapter(Base):
+    __tablename__ = 'chapter'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True, index=True)
+    description = db.Column(db.String(256))
+    # 视频 url 地址
+    vedio_url = db.Column(db.String(256))
+    # 视频时长 格式： '30:15'、'1:15:30'
+    vedio_duration = db.Column(db.String(24))
+    # 关联到课程，课程删除关联删除相关章节
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id', ondelete="CASCADE"))
+    course = db.relationship('Course', uselist=False)
+
+    def __repr__(self):
+        return '<Chapter:{}>'.format(self.name)

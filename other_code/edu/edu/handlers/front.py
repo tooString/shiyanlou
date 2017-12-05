@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint, render_template, url_for, flash, redirect
+from flask import request, current_app
 from edu.models import Course, User
 from edu.forms import LoginForm, RegisterForm
 from flask_login import login_user, logout_user, login_required
@@ -10,8 +11,15 @@ front = Blueprint('front', __name__)
 
 @front.route('/')
 def index():
-    courses = Course.query.all()
-    return render_template('index.html', courses=courses)
+    # 获取参数中传过来的页数
+    page = request.args.get('page', default=1, type=int)
+    # 生成分页对象
+    pagination = Course.query.paginate(
+        page=page,
+        per_page=current_app.config['INDEX_PER_PAGE'],
+        error_out=False
+    )
+    return render_template('index.html', pagination=pagination)
 
 
 @front.route('/login', methods=['GET', 'POST'])
