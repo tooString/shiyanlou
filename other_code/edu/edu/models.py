@@ -24,8 +24,8 @@ class User(Base, UserMixin):
 
     # 用数字表示角色，方便判断是否有权限
     ROLE_USER = 10
-    ROEL_STAFF = 20
-    ROEL_ADMIN = 30
+    ROLE_STAFF = 20
+    ROLE_ADMIN = 30
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), unique=True, index=True, nullable=False)
@@ -58,12 +58,12 @@ class User(Base, UserMixin):
         return check_password_hash(self._password, password)
 
     @property
-    def id_admin(self):
-        return self.role == self.ROEL_ADMIN
+    def is_admin(self):
+        return self.role == self.ROLE_ADMIN
 
     @property
     def is_staff(self):
-        return self.role == self.ROEL_STAFF
+        return self.role == self.ROLE_STAFF
 
 
 class Course(Base):
@@ -103,3 +103,7 @@ class Chapter(Base):
 
     def __repr__(self):
         return '<Chapter:{}>'.format(self.name)
+
+    @property
+    def url(self):
+        return url_for('course.chapter', course_id=self.course.id, chapter_id=self.id)

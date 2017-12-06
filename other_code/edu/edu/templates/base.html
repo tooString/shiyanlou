@@ -6,6 +6,15 @@
     <link rel="stylesheet" href="static/main.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
+
+{% block head_css %}
+<!-- css 文件 -->
+{% endblock %}
+
+{% block tail_js %}
+<!-- js 文件 -->
+{% endblock %}
+
   <body>
     <nav class="navbar navbar-inverse">
       <div class="container">
@@ -25,6 +34,10 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">课程<span class="sr-only">(current)</span></a></li>
             <li><a href="#">直播</a></li>
+            {% if current_user.is_authenticated and current_user.is_admin %}
+            <li><a href="{{ url_for('admin.index') }}">控制台</a></li>
+            {% endif %}
+
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if not current_user.is_authenticated %}
@@ -36,7 +49,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="#">个人主页</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="＃">退出登录</a></li>
+                  <li><a href="{{ url_for('front.logout') }}">退出登录</a></li>
               </ul>
               </li>
             {% endif %}
